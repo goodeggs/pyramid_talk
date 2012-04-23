@@ -1,0 +1,9 @@
+dump
+reports
+.jhw-cache
+npm-debug.log
+.idea
+.DS_Store
+log/*
+!.gitkeep
+node_modules
