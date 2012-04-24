@@ -13,7 +13,7 @@ module.exports = Person =
       (collection, next) ->
         collection.insert data, safe:true, next
       (result, next) ->
-          next(null, result[0])
-          db.close()
+        next(null, result[0])
+        db.close()
     ], callback
 

@@ -57,6 +57,7 @@ So we wanted
   Futures
   Exception handling
   Serial and parallel flow control
+  Conform to standard async APIs
   Fibrous
 
 
@@ -70,3 +71,16 @@ But what about thrown exceptions?
   So do we also have to start catching exceptions?
   You need to know if libraries are going to throw exceptions, write
   good tests, and centralize exception handling
+
+
+Approaches:
+Straight JS
+Named functions
+Straight coffee
+async
+Futures/Promises
+Fibrous
+
+Topics:
+Parallel
+Exception handling

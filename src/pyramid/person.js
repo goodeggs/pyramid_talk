@@ -8,7 +8,7 @@ module.exports = {
 
   create: function(data, callback) {
     db.open(function(err, client) {
-      client.collection("people", function(err, collections) {
+      client.collection("people", function(err, collection) {
         collection.insert(data, {safe: true}, function(err, result) {
           callback(null, result[0]);
           client.close();
