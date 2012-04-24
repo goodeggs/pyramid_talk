@@ -1,0 +1,72 @@
+Start with a simple example. A Person object with a create method that
+uses MongoDB to store person data.
+  Show source
+  Show spec, explain done() callback
+  Run spec
+
+But what if the database is not running?
+  $ launchctl stop org.mongodb.mongod
+  Run spec
+  Timed out because callbacks weren't called
+  Throw an exception (called collection() on null) which wasn't handled
+
+Uncomment person_handle_errors
+  Show source
+  Run spec
+  Note that the stack trace is for the error but does not include our
+  code - a common issue in node
+  $ launchctl start org.mongodb.mongod
+  Run spec
+  And this doesn't even address handling thrown exceptions, just errors
+  explicitly passed to callbacks
+
+Use named functions to unwrap the callback pyramid
+  Uncomment named_functions/person
+  Show source
+  Puts callbacks in sequence
+  This improves readability, especially as callbacks get more
+  complicated. Better but not great.
+  Note that we lost the reference to client in handleResult so we use
+  the db reference instead
+  Run spec
+
+We use coffeescript as it improves readability
+  Can't do the named functions trick ;-)
+  Show pyramid/person.coffee and person.js
+
+Use async
+  5th most depended on npm package
+  async.waterfall unwraps callbacks like named functions
+  An array of asynchronous function calls where the result from one is
+  the first argument to the next
+  Any error skips the waterfall and is provided to the final handler
+  Show source
+  Doesn't catch exceptions
+
+We haven't looked at concurrent tasks yet
+  Show parallel.spec.coffee
+  This can get complicated quickly if you are rolling your own solutions
+
+Another approach is to use promises or futures
+  Show future/person.coffee
+  A lot of libraries use this approach internally
+  Mongoose uses promises
+  Can leave you with async methods that don't look like it
+
+So we wanted
+  Futures
+  Exception handling
+  Serial and parallel flow control
+  Fibrous
+
+
+
+But what about thrown exceptions?
+  In 3rd party code? In your code?
+  Uncomment console.log line in person_handle_errors
+  Run spec
+  Uncaught exceptions can crash your node server or leave request
+  handlers waiting for callbacks that never get called
+  So do we also have to start catching exceptions?
+  You need to know if libraries are going to throw exceptions, write
+  good tests, and centralize exception handling
