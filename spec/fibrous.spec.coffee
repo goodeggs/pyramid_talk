@@ -18,10 +18,10 @@ describe 'Person', ->
     expect(person.name).toEqual('Indiana Jones')
 
   it 'creates two in parallel', ->
-    people = fibrous.wait [
+    [indy, willie] = people = fibrous.wait [
       Person.future.create { name: 'Indiana Jones' }
       Person.future.create { name: 'Willie Scott' }
     ]
     expect(people.length).toEqual(2)
-    expect(people[0].name).toEqual('Indiana Jones')
+    expect(indy.name).toEqual('Indiana Jones')
 
